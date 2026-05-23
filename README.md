@@ -1,7 +1,5 @@
 # Validation Service
 
-[HSE-LLM-PROJECT-2026/validation_service](https://github.com/HSE-LLM-PROJECT-2026/validation_service)
-
 ## Описание
 
 FastAPI-сервис для проверки моделей перед переводом deployment в рабочее состояние. Сервис хранит SLO-конфиги и запускает validation runs для конкретных развертываний.
