@@ -67,14 +67,21 @@ LOG_LEVEL=INFO
 ```
 
 ## Основные API-ручки
-- `GET /health`
-- `GET /livez`
-- `GET /service-info`
-- `GET /slo-configs`
-- `POST /slo-configs`
-- `POST /validation-runs`
-- `GET /validation-runs/{run_id}`
-- `POST /validation-runs/{run_id}/cancel`
+
+| Метод | Ручка | Кто использует | Назначение |
+|--------|-------|----------------|------------|
+| `GET` | `/health` | Ingress, мониторинг | Проверяет доступность validation service. |
+| `GET` | `/livez` | Kubernetes | Liveness probe контейнера. |
+| `GET` | `/service-info` | Frontend, state facade | Возвращает служебную информацию о сервисе валидации. |
+| `GET` | `/validation/slo-configs` | Frontend, deployment service | Возвращает доступные SLO-конфиги для формы деплоя и проверки модели. |
+| `POST` | `/validation/slo-configs` | Frontend | Создает SLO-конфиг с порогами TTFT, TPS, TPOT, error rate и очереди. |
+| `GET` | `/validation/slo-configs/{slo_config_id}` | Frontend, deployment service | Возвращает конкретный SLO-конфиг по идентификатору. |
+| `DELETE` | `/validation/slo-configs/{slo_config_id}` | Frontend | Отключает или удаляет SLO-конфиг, если он больше не нужен. |
+| `GET` | `/validation/runs` | Frontend, deployment service | Возвращает историю запусков валидации. |
+| `POST` | `/validation/runs` | Deployment service | Создает validation run для конкретного deployment после поднятия модели. |
+| `GET` | `/validation/runs/{run_id}` | Frontend, deployment service | Возвращает статус validation run: pending, running, passed, failed или cancelled. |
+| `POST` | `/validation/runs/{run_id}/cancel` | Frontend, deployment service | Отменяет активную проверку модели. |
+| `GET` | `/validation/reports/{run_id}` | Frontend | Возвращает отчет по метрикам и итоговый verdict проверки. |
 
 ## Сборка и запуск в Docker
 
